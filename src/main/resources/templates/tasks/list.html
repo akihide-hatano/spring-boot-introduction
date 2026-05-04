@@ -20,11 +20,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="task :${taskList}">
-                    <td th:text="${task.id}"></td>
-                    <td th:text="${task.summary}"></td>
-                    <td th:text="${task.description}"></td>
-                    <td th:text="${task.status}"></td>
+                <tr th:each="task :${taskList}" th:object="${task}">
+                    <td th:text="*{id}"></td>
+                    <td th:text="*{summary}"></td>
+                    <td th:text="*{description}"></td>
+                    <td th:text="*{status}"></td>
                 </tr>
             </tbody>
     </table>
