@@ -1,7 +1,7 @@
 package com.example.todo.service.task;
 
-public enum TaskStatus {
-
+//タスクの状態を表す列挙型
+public enum TaskStatus{
     TODO,
     DOING,
     DONE

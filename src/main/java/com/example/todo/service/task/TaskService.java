@@ -2,19 +2,18 @@ package com.example.todo.service.task;
 
 import java.util.List;
 
-import com.example.todo.controller.task.TaskDTO;
-
 public class TaskService {
 
-    public List<TaskDTO> find(){
-        var task1 = new TaskDTO(1,
+    public List<TaskEntity> find(){
+        var task1 = new TaskEntity(1L,
             "SpringBootを学ぼう",
             "todoアプリを作ろう",
-            "todo");
+            TaskStatus.TODO);
 
-        var task2 = new TaskDTO(2L,
+        var task2 = new TaskEntity(2L,
             "Spring Securityについて学ぶ",
-            "ログイン機能を作ってみる", "todo");
+            "ログイン機能を作ってみる",
+            TaskStatus.DOING);
 
             //returrnにてリストを返すためにList.of()を使用して、task1とtask2をリストにまとめて返す
             return List.of(task1, task2);
