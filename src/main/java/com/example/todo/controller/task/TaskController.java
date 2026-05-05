@@ -1,5 +1,6 @@
 package com.example.todo.controller.task;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.todo.service.task.TaskService;
 
 @Controller
+@RequiredArgsConstructor
+
 public class TaskController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
@@ -16,9 +19,6 @@ public class TaskController {
     //TaskServiceクラスのインスタンスを作成
     private final TaskService taskService;
 
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
 
 
     //ハンドラー名
