@@ -1,6 +1,11 @@
 package com.example.todo.service.task;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
+
+//DIに変更する
+@Service
 
 public class TaskService {
 

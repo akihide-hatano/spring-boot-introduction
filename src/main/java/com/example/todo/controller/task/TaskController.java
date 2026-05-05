@@ -14,7 +14,12 @@ public class TaskController {
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
     //TaskServiceクラスのインスタンスを作成
-    private final TaskService taskService = new TaskService();
+    private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
 
     //ハンドラー名
     @GetMapping("/tasks")
