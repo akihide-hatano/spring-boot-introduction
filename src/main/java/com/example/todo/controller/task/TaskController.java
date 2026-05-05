@@ -21,10 +21,14 @@ public class TaskController {
     public String list(Model model){
         log.info("list()が呼び出されました");
 
+        //streamでmapでTaskEntityをTaskDTOに変換して、toList()でリストにまとめる
+        var taskList = taskService.find()
+                        .stream()
+                        .map(TaskDTO::toDTO).toList();
 
-        model.addAttribute("taskList", taskService.find());
-        log.debug("model attribute taskList='{}' を設定しました", taskService.find());
-        log.debug("taskLists/list.html を表示します", taskService.find());
+
+        model.addAttribute("taskList", taskList);
+        log.debug("model attribute taskList='{}' を設定しました", taskList);
         log.info("list()の処理が終了しました");
         return "tasks/list";
     }
