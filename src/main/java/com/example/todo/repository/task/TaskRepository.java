@@ -38,6 +38,10 @@ public interface TaskRepository {
     @Select("SELECT id, summary, description, status FROM tasks WHERE id = #{taskId}")
     Optional<TaskEntity> selectById(@Param("taskId") long taskId);
 
+    //全件selectのSQL文を追加
+    @Select("SELECT id, summary, description, status FROM tasks")
+    List<TaskEntity> selectAll();
+
     @Insert("""
             INSERT INTO tasks (summary, description, status)
             VALUES (#{task.summary}, #{task.description}, #{task.status})

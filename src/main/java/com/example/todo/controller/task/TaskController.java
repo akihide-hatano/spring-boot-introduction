@@ -37,4 +37,10 @@ public class TaskController {
         log.info("list()の処理が終了しました");
         return "tasks/list";
     }
+
+    //タスクの詳細を表示するハンドラー
+    @GetMapping("/tasks/detail")
+    public  String showDetail(){
+        return "tasks/detail";
+    }
 }
