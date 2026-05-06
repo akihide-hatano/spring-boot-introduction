@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.todo.service.task.TaskService;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,8 +19,6 @@ public class TaskController {
 
     //TaskServiceクラスのインスタンスを作成
     private final TaskService taskService;
-
-
 
     //ハンドラー名
     @GetMapping("/tasks")
@@ -39,8 +38,10 @@ public class TaskController {
     }
 
     //タスクの詳細を表示するハンドラー
-    @GetMapping("/tasks/detail")
-    public  String showDetail(){
+    //@PathVarialbeを使用してurlを取得する
+    @GetMapping("/tasks/{id}")
+    public  String showDetail(@PathVariable("id") long taskId, Model model){
+        model.addAttribute("taskId",taskId);
         return "tasks/detail";
     }
 }
