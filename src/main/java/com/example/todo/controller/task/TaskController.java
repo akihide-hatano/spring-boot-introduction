@@ -38,10 +38,13 @@ public class TaskController {
     }
 
     //タスクの詳細を表示するハンドラー
-    //@PathVarialbeを使用してurlを取得する
+    //@PathVariableを使用してurlを取得する
     @GetMapping("/tasks/{id}")
     public  String showDetail(@PathVariable("id") long taskId, Model model){
-        model.addAttribute("taskId",taskId);
+        //taskId->taskEntity
+        var taskEntity = taskService.findById(taskId)
+                .orElseThrow(()->new IllegalArgumentException("指定されたIDのタスクが見つかりません。id=" + taskId));
+        model.addAttribute("taskId",taskEntity.id());
         return "tasks/detail";
     }
 }
