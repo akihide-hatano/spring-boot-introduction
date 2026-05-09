@@ -61,11 +61,11 @@ public class TaskController {
 
     //POST /tasks
     @PostMapping("/tasks")
-    public String create(TaskForm form,Model model) {
+    public String create(TaskForm form) {
         log.info("create()が呼び出されました taskForm={}", form);
         var newEntity =new TaskEntity(null,form.summary(),form.description(), TaskStatus.valueOf(form.status()));
         taskService.create(newEntity);
         // TODO: Serviceに作成処理を追加したら、ここで taskService.create(taskForm) を呼ぶ
-        return list(model);
+        return "redirect:/tasks";
     }
 }
