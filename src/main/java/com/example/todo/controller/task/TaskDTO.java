@@ -8,7 +8,6 @@ public record TaskDTO(
     String description,
     String status) {
     public static TaskDTO toDTO(TaskEntity entity) {
-    //reteurnにてTaskDTOクラスのインスタンスを作成して返す
         return new TaskDTO(
                 entity.id(),
                 entity.summary(),
