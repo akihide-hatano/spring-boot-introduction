@@ -9,12 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.todo.service.task.TaskService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
@@ -57,17 +54,16 @@ public class TaskController {
 
     //GET /tasks/creationForm
     @GetMapping("/creationForm")
-    public String showCreationForm(Model model) {
-        model.addAttribute("mode", "CREATE");
-        model.addAttribute("taskForm", new TaskForm(null, null, "TODO"));
+    public String showCreationForm(@ModelAttribute  TaskForm form, Model model) {
+        model.addAttribute("mode","CREATE");
         return "tasks/form";
     }
 
     //POST /tasks
     @PostMapping
-    public String create(@Validated  TaskForm form, BindingResult bindingResult) {
+    public String create(@Validated  TaskForm form, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()){
-            return "tasks/form";
+            return showCreationForm(form, model);
         }
         taskService.create(form.toEntity());
         // TODO: Serviceに作成処理を追加したら、ここで taskService.create(taskForm) を呼ぶ
