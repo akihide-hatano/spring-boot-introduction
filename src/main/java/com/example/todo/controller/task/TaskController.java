@@ -7,14 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.todo.service.task.TaskService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/tasks")
 
 public class TaskController {
 
@@ -24,7 +28,7 @@ public class TaskController {
     private final TaskService taskService;
 
     //ハンドラー名
-    @GetMapping("/tasks")
+    @GetMapping
     public String list(Model model){
         log.info("list()が呼び出されました");
 
@@ -42,7 +46,7 @@ public class TaskController {
 
     //タスクの詳細を表示するハンドラー
     //@PathVariableを使用してurlを取得する
-    @GetMapping("/tasks/{id:\\d+}")
+    @GetMapping("/{id:\\d+}")
     public  String showDetail(@PathVariable("id") long taskId, Model model){
         //taskId->taskEntity
         var taskEntity = taskService.findById(taskId)
@@ -52,7 +56,7 @@ public class TaskController {
     }
 
     //GET /tasks/creationForm
-    @GetMapping("/tasks/creationForm")
+    @GetMapping("/creationForm")
     public String showCreationForm(Model model) {
         model.addAttribute("mode", "CREATE");
         model.addAttribute("taskForm", new TaskForm(null, null, "TODO"));
@@ -60,11 +64,12 @@ public class TaskController {
     }
 
     //POST /tasks
-    @PostMapping("/tasks")
-    public String create(TaskForm form) {
-        log.info("create()が呼び出されました taskForm={}", form);
-        var newEntity =new TaskEntity(null,form.summary(),form.description(), TaskStatus.valueOf(form.status()));
-        taskService.create(newEntity);
+    @PostMapping
+    public String create(@Validated  TaskForm form, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "tasks/form";
+        }
+        taskService.create(form.toEntity());
         // TODO: Serviceに作成処理を追加したら、ここで taskService.create(taskForm) を呼ぶ
         return "redirect:/tasks";
     }
