@@ -69,4 +69,16 @@ public class TaskController {
         // TODO: Serviceに作成処理を追加したら、ここで taskService.create(taskForm) を呼ぶ
         return "redirect:/tasks";
     }
+
+    // GET /tasks/{id}/editForm
+    @GetMapping("/{id:\\d+}/editForm")
+    public String showEditForm(@PathVariable("id") long id, Model model) {
+        var taskEntity = taskService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("指定されたIDのタスクが見つかりません。id=" + id));
+
+        model.addAttribute("mode", "EDIT");
+        model.addAttribute("id", id);
+        model.addAttribute("taskForm", TaskForm.fromEntity(taskEntity));
+        return "tasks/form";
+    }
 }
