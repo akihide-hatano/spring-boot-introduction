@@ -47,7 +47,7 @@ public class TaskController {
     public  String showDetail(@PathVariable("id") long taskId, Model model){
         //taskId->taskEntity
         var taskEntity = taskService.findById(taskId)
-                .orElseThrow(()->new IllegalArgumentException("指定されたIDのタスクが見つかりません。id=" + taskId));
+                .orElseThrow(TaskNotFoundException::new);
         model.addAttribute("task",TaskDTO.toDTO(taskEntity));
         return "tasks/detail";
     }
@@ -74,7 +74,7 @@ public class TaskController {
     @GetMapping("/{id:\\d+}/editForm")
     public String showEditForm(@PathVariable("id") long id, Model model) {
         var taskEntity = taskService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("指定されたIDのタスクが見つかりません。id=" + id));
+                .orElseThrow(TaskNotFoundException::new);
 
         model.addAttribute("mode", "EDIT");
         model.addAttribute("id", id);
