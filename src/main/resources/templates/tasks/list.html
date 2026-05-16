@@ -15,10 +15,10 @@
             検索
         </div>
         <div class="card-body">
-            <form th:action="@{/tasks}" method="get">
+            <form th:action="@{/tasks}" method="get" th:object="${searchDTO}">
                 <div class="form-group mt-3">
                     <label class="form-label" for="summaySearch">概要</label>
-                    <input class="form-control" id="summaySearch" name="summary" placeholder="概要で検索">
+                    <input class="form-control" id="summaySearch" name="summary" placeholder="概要で検索" th:field="*{summary}">
                 </div>
                 <div class="form-group mt-3">
                     <div>

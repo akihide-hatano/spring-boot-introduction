@@ -40,6 +40,7 @@ public class TaskController {
                         .stream()
                         .map(TaskDTO::toDTO).toList();
         model.addAttribute("taskList", taskList);
+        model.addAttribute("searchDTO",searchForm.toDTO());
         log.debug("model attribute taskList='{}' を設定しました", taskList);
         log.info("list()の処理が終了しました");
         return "tasks/list";
