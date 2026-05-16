@@ -11,7 +11,7 @@
 <section layout:fragment="content">
     <div>
         <a th:href="@{/tasks/{id}/editForm(id=${id})}" class="btn btn-primary">編集</a>
-        <form th:action="@{tasks/{id}(id=${id})}" th:method="delete" onsubmit="return confirm('本当に削除しますか？');
+        <form th:action="@{/tasks/{id}(id=${id})}" th:method="delete" onsubmit="return confirm('本当に削除しますか？');
         " style="display: inline;">
             <button type="submit" class="btn btn-danger">削除</button>
         </form>
