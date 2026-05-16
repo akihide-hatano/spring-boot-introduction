@@ -1,6 +1,7 @@
 package com.example.todo.controller.task;
 
 import com.example.todo.service.task.TaskEntity;
+import com.example.todo.service.task.TaskSearchEntity;
 import com.example.todo.service.task.TaskStatus;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -10,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 import com.example.todo.service.task.TaskService;
 
@@ -27,13 +31,14 @@ public class TaskController {
     //ハンドラー名
     @GetMapping
     public String list(TaskSearchForm searchForm,Model model){
+        //searchForm.status() == null; List.of()
+        //searchForm.status() !== null; List<TaskStatus>
         log.info("list()が呼び出されました");
+
         //streamでmapでTaskEntityをTaskDTOに変換して、toList()でリストにまとめる
-        var taskList = taskService.find()
+        var taskList = taskService.find(searchForm.toEntity())
                         .stream()
                         .map(TaskDTO::toDTO).toList();
-
-
         model.addAttribute("taskList", taskList);
         log.debug("model attribute taskList='{}' を設定しました", taskList);
         log.info("list()の処理が終了しました");
