@@ -26,9 +26,8 @@ public class TaskController {
 
     //ハンドラー名
     @GetMapping
-    public String list(Model model){
+    public String list(TaskSearchForm searchForm,Model model){
         log.info("list()が呼び出されました");
-
         //streamでmapでTaskEntityをTaskDTOに変換して、toList()でリストにまとめる
         var taskList = taskService.find()
                         .stream()
